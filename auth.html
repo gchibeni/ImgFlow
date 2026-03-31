@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ImgFlow — Google Auth</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                background: var(--bg);
+                color: #fff;
+            }
+
+            body.success {
+                --bg: #1a7a3c;
+            }
+            body.failure {
+                --bg: #a02020;
+            }
+
+            .card {
+                text-align: center;
+                padding: 2.5rem 3rem;
+            }
+
+            .icon {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 1.25rem;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+                font-weight: 700;
+                letter-spacing: -0.5px;
+            }
+
+            p {
+                margin-top: 0.75rem;
+                font-size: 1rem;
+                opacity: 0.85;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <img
+                class="icon"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAOg0lEQVR42u1dW3Nb1RVe52jrrkg2Ue2WQAIECAEacAKUtDMxZjJDgBn60g60M3QG+pAHnlr+Bi1PPPACM+Whw1snL1wacOzSYockhCTckpISE0OcKLFly5ZkSed0ffvo2LJxsGQs6Rx57YzGsnx0yf6+vS7fWntL0SrDsixzaGjIHBgYKOP36enxtGEF95uGvd+yjT1k2FvJNlKGQQGS0bJh21Thuc/y3I8xFscZi8O2WTqcTG7J4O+Dg4Oqv7/fMk3T+qHXMVYBX/ELaOBzk5d324b9At99KhaLpU0VoEqpTKVSiSqViiDShhEIBCgYDFIgqMgqV2hubg7gHzJs45VEd8+J5RjWTQB+ksHD5Fslk/nmpkgw9FI4HHlahWM0n89hi7jlHhxGerugEKKNgLs3gxU+EyIP8nykeoYKvBiPp8fh8+EOloO/qv5fjRR1sJCbvLzbNuwX+O5TfBBB2lQBqpTKVCqV5LSQNp4KgqoeCjvQ9ufm5rSqC5EHef5yDK97/uMqJDCHhobMgYEB/SJO7SC4n6uI+7mQtIclpa1cVEixDRAVscXNHKjno5yPii6KerZZOlyV9gkiT39/P1b9D6b0/wcAExpyMZhWmAAAAABJRU5ErkJggg=="
+                alt="ImgFlow"
+            />
+            <h1 id="title"></h1>
+            <p id="subtitle"></p>
+        </div>
+        <script>
+            const ok =
+                typeof AUTH_SUCCESS !== "undefined" ? AUTH_SUCCESS : false;
+            document.body.classList.add(ok ? "success" : "failure");
+            document.getElementById("title").textContent = ok
+                ? "Authenticated!"
+                : "Failed";
+            document.getElementById("subtitle").textContent = ok
+                ? "You can close this window and get back to ImgFlow."
+                : "Close this window and try again.";
+        </script>
+    </body>
+</html>

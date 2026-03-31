@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1a1a2e;
+  background-color: #f3f0e9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* Tag input styles */
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #8a9d78;
+  color: white;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: grab;
+  user-select: none;
+  transition: background 0.15s;
+}
+.tag-chip:hover {
+  background: #778a66;
+}
+.tag-chip .tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.tag-chip .tag-remove:hover {
+  background: rgba(255,255,255,0.45);
+}
+
+/* Drag and drop zone */
+.drop-zone {
+  border: 2px dashed #c4c4c4;
+  border-radius: 16px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #8a9d78;
+  background: rgba(138, 157, 120, 0.05);
+}
+.drop-zone.has-file {
+  border-color: #2ecc71;
+  background: rgba(46, 204, 113, 0.05);
+}
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 4px solid #e0e0e0;
+  border-top-color: #8a9d78;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  z-index: 50;
+  margin-top: 4px;
+}
+.dropdown-item {
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.1s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dropdown-item:hover {
+  background: #f0f0f0;
+}
+
+/* Button base */
+.btn {
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Montserrat', sans-serif;
+}
+.btn-primary {
+  background: #8a9d78;
+  color: white;
+}
+.btn-primary:hover:not(:disabled) {
+  background: #778a66;
+}
+.btn-primary:disabled {
+  background: #b8c4ad;
+  cursor: not-allowed;
+}
+.btn-secondary {
+  background: #e8e8e8;
+  color: #333;
+}
+.btn-secondary:hover {
+  background: #d8d8d8;
+}
+.btn-outline {
+  background: transparent;
+  border: 2px solid #8a9d78;
+  color: #8a9d78;
+}
+.btn-outline:hover {
+  background: rgba(138, 157, 120, 0.08);
+}
