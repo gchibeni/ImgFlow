@@ -104,7 +104,7 @@ export default function OptionsPage({
             );
             return idx >= 0 && row[idx] ? row[idx].trim() : tag;
         });
-        return parts.join("_");
+        return sanitizeName(parts.join("_"), 70);
     }, [subfolderTags, sheet, headers]);
 
     // Build example rename from first data row
@@ -118,7 +118,7 @@ export default function OptionsPage({
             );
             return idx >= 0 && row[idx] ? row[idx].trim() : tag;
         });
-        return `${parts.join("_")}_Img1.jpg`;
+        return `${sanitizeFileName(parts.join("_"), "_Img1", 70)}.jpg`;
     }, [renameTags, sheet, headers]);
 
     // Listen for download progress events
@@ -517,6 +517,7 @@ export default function OptionsPage({
                                         joined with "_" to name the subfolder
                                         for each row. If none are selected,
                                         rows are numbered (row1, row2, ...).
+                                        Spaces are replaced with -.
                                     </p>
                                     {exampleSubfolder && (
                                         <p className="mt-1.5 font-mono text-[11px] bg-[#1e2423] rounded px-1.5 py-0.5 break-all">
@@ -550,7 +551,7 @@ export default function OptionsPage({
                                         Choose columns whose values will be
                                         joined with "_" to rename each
                                         downloaded image, followed by _Img1,
-                                        _Img2, etc.
+                                        _Img2, etc. Spaces are replaced with -.
                                     </p>
                                     {exampleRename && (
                                         <p className="mt-1.5 font-mono text-[11px] bg-[#1e2423] rounded px-1.5 py-0.5 break-all">
@@ -630,12 +631,14 @@ export default function OptionsPage({
     );
 }
 
-/** Strip invalid filesystem characters and truncate to maxLen. */
+/** Strip invalid filesystem characters and truncate to maxLen. Spaces become -. */
 function sanitizeName(name: string, maxLen: number): string {
+    let clean = name.replace(/ /g, "-");
     // biome-ignore lint: simple regex replace
-    let clean = name.replace(/[<>:"/\\|?*\x00-\x1f]/g, "_").trim();
-    // Collapse runs of underscores
+    clean = clean.replace(/[<>:"/\\|?*\x00-\x1f]/g, "_").trim();
+    // Collapse runs of underscores and dashes
     clean = clean.replace(/_+/g, "_").replace(/^_|_$/g, "");
+    clean = clean.replace(/-+/g, "-").replace(/^-|-$/g, "");
     if (clean.length > maxLen) {
         clean = clean.slice(0, maxLen);
     }
@@ -645,15 +648,18 @@ function sanitizeName(name: string, maxLen: number): string {
 /**
  * Build a safe filename: sanitize the prefix, then append suffix (_Img1 etc).
  * Truncates the prefix so prefix+suffix stays within maxLen (excluding extension).
+ * Spaces become -.
  */
 function sanitizeFileName(
     prefix: string,
     suffix: string,
     maxLen: number,
 ): string {
+    let clean = prefix.replace(/ /g, "-");
     // biome-ignore lint: simple regex replace
-    let clean = prefix.replace(/[<>:"/\\|?*\x00-\x1f]/g, "_").trim();
+    clean = clean.replace(/[<>:"/\\|?*\x00-\x1f]/g, "_").trim();
     clean = clean.replace(/_+/g, "_").replace(/^_|_$/g, "");
+    clean = clean.replace(/-+/g, "-").replace(/^-|-$/g, "");
     const maxPrefix = maxLen - suffix.length;
     if (maxPrefix > 0 && clean.length > maxPrefix) {
         clean = clean.slice(0, maxPrefix);
